@@ -115,39 +115,26 @@ private fun SearchResultContent(
     photos: FlickrPhotos,
     onPhotoClicked: (FlickrPhoto) -> Unit
 ) {
-    when(LocalConfiguration.current.orientation) {
-        Configuration.ORIENTATION_LANDSCAPE -> {
-            LazyVerticalGrid(
-                modifier = modifier,
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(photos.items) { photo ->
-                    PhotoResult(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onPhotoClicked.invoke(photo) },
-                        photo = photo
-                    )
+    val gridCells = if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        GridCells.Fixed(2)
+    } else {
+        GridCells.Fixed(1)
+    }
 
-                }
-            }
-        }
-        else -> {
-            LazyColumn(
-                modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(photos.items) { photo ->
-                    PhotoResult(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onPhotoClicked.invoke(photo) },
-                        photo = photo
-                    )
-                }
-            }
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = gridCells,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(photos.items) { photo ->
+            PhotoResult(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onPhotoClicked.invoke(photo) },
+                photo = photo
+            )
+
         }
     }
 }
