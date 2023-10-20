@@ -58,6 +58,6 @@ If I had more time to work on this project, I would like to add:
 - [ ] More themeing, I didn't spend a ton of time designing the UI and it looks a little plain. It may work in dark mode but no time was put towards making sure it looks good.
 - [ ] More accessability, I added content descriptions for Talkback but more attention to font sizes and contrast would have been nice.
 - [ ] More unit tests, I added unit tests to the main view model which does the majority of the heavy lifting, but adding more tests to bring the test coverage up above 90% would be ideal.
-- [ ] More landscape support, I took the time to make sure the search view looked good and worked in landscape but didn't put that samme time towards the detail screen.
+- [ ] More landscape support, I took the time to make sure the search view looked good and worked in landscape but didn't put that same time towards the detail screen.
 - [ ] I would have liked to add a button on the detail screen to share, or at the very least copy the URL for the image.
 - [ ] Right now the navigation uses the detault animations, I would have liked to add a swipe up and swipe right animations for navigating to and from screens.
