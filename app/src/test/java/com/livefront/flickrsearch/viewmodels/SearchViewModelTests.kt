@@ -83,6 +83,17 @@ class SearchViewModelTests {
         assertEquals(SAVED_STATE, viewModel.stateFlow.value)
     }
 
+    @Test
+    fun `verify ErrorRetryTouched resets error state to false`() = runBlocking {
+        val handle = SavedStateHandle(mapOf(BaseViewModel.SAVED_STATE_KEY to ERROR_STATE))
+        val viewModel = SearchViewModel(handle, flickrRepository)
+        viewModel.stateFlow.test {
+            assert(awaitItem().error) // init
+            viewModel.actionChannel.trySend(SearchViewModelAction.ErrorRetryTouched)
+            assert(!awaitItem().error) // reset
+        }
+    }
+
     companion object {
         @JvmStatic
         @RegisterExtension
@@ -93,6 +104,10 @@ class SearchViewModelTests {
         private val SAVED_STATE = SearchViewModelState(
             searchText = "Testing",
             loading = true
+        )
+
+        private val ERROR_STATE = SearchViewModelState(
+            error = true
         )
 
         private val SAMPLE_FLICKR_PHOTO = FlickrPhoto(

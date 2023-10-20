@@ -19,6 +19,9 @@ import com.livefront.flickrsearch.ui.screens.search.SearchView
 import com.livefront.flickrsearch.ui.theme.FlickrSearchTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * This is the one and only main activity where all of the navigation between screens is done
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

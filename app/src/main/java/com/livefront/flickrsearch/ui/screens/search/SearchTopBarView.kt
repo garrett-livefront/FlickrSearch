@@ -35,6 +35,10 @@ import com.livefront.flickrsearch.R
 import com.livefront.flickrsearch.ui.theme.FlickrSearchTheme
 
 
+/**
+ * [Composable] for the top bar on the search screen. includes the collapsable title and
+ * the search bar itself
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchTopBar(

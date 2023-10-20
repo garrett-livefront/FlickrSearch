@@ -17,7 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.livefront.flickrsearch.ui.theme.FlickrSearchTheme
 
-
+/**
+ * Fun little [Composable] view for displaying the tags on an image
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagsView(

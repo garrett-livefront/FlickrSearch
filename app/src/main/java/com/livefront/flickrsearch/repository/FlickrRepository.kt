@@ -6,6 +6,10 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
+/**
+ * Repository class used as an interface to the api call and checks for errors and wraps the result
+ * in a result wrapper class
+ */
 class FlickrRepository @Inject constructor(
     private val flickrService: FlickrService
 ) {

@@ -28,13 +28,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.gson.Gson
+import com.livefront.flickrsearch.R
 import com.livefront.flickrsearch.data.network.FlickrPhoto
 import com.livefront.flickrsearch.data.network.FlickrPhotos
+import com.livefront.flickrsearch.data.network.extractUsername
+import com.livefront.flickrsearch.ui.ErrorState
 import com.livefront.flickrsearch.ui.EventsEffect
 import com.livefront.flickrsearch.ui.ImageFromUrl
 import com.livefront.flickrsearch.ui.Loading
@@ -42,6 +46,9 @@ import com.livefront.flickrsearch.viewmodels.SearchViewModel
 import com.livefront.flickrsearch.viewmodels.SearchViewModelAction
 import com.livefront.flickrsearch.viewmodels.SearchViewModelEvent
 
+/**
+ * [Composable] for the search view screen that's navigated to via the [NavController]
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(
@@ -81,9 +88,13 @@ fun SearchView(
                 .fillMaxSize()
         ) {
             if (state.error) {
-                // TODO create an error composable
+                ErrorState(
+                    modifier = Modifier.fillMaxSize(),
+                    errorMessage = R.string.search_error_message,
+                    onTryAgainPressed = { searchViewModel.trySendAction(SearchViewModelAction.ErrorRetryTouched) }
+                )
             } else if (state.loading) {
-                Loading(modifier = Modifier.fillMaxSize()) // TODO fix the centering of this vertically
+                Loading(modifier = Modifier.fillMaxSize())
             } else {
                 SearchResultContent(
                     modifier = Modifier
@@ -156,7 +167,8 @@ private fun PhotoResult(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f / 1f),
-                imageUrl = photo.media.values.first()
+                imageUrl = photo.media.values.first(),
+                contentDescription = "${photo.extractUsername()}'s photo"
             )
             Text(
                 modifier = Modifier.padding(8.dp),

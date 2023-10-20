@@ -1,7 +1,6 @@
 package com.livefront.flickrsearch.viewmodels
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.livefront.flickrsearch.data.network.FlickrPhoto
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
-import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +35,7 @@ class SearchViewModel @Inject constructor(
             is SearchViewModelAction.SearchTextUpdated -> onSearchTextUpdated(action.updatedSearchText)
             is SearchViewModelAction.SearchResultsReceived -> onSearchResultsReceived(action.searchResult)
             is SearchViewModelAction.SearchResultTouched -> onSearchResultTouched(action.result)
+            is SearchViewModelAction.ErrorRetryTouched -> onErrorRetryTouched()
         }
     }
 
@@ -63,6 +62,11 @@ class SearchViewModel @Inject constructor(
     private fun onSearchResultTouched(result: FlickrPhoto) {
         sendEvent(SearchViewModelEvent.NavigateToDetails(result))
     }
+
+    private fun onErrorRetryTouched() {
+        mutableStateFlow.update { it.copy(error = false) }
+        onSearchTextUpdated(stateFlow.value.searchText)
+    }
 }
 
 @Parcelize
@@ -81,4 +85,5 @@ sealed class SearchViewModelAction {
     data class SearchTextUpdated(val updatedSearchText: String) : SearchViewModelAction()
     data class SearchResultsReceived(val searchResult: FlickrSearchResult) : SearchViewModelAction()
     data class SearchResultTouched(val result: FlickrPhoto) : SearchViewModelAction()
+    object ErrorRetryTouched: SearchViewModelAction()
 }

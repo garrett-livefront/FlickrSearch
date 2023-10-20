@@ -1,9 +1,7 @@
 package com.livefront.flickrsearch.ui
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -25,11 +24,17 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.livefront.flickrsearch.R
 
+/**
+ * Reusable [Composable] that can be used to load and display an async image from url
+ * This also displays a blank filler view while the image is loading and also has
+ * support for showing the size of the image under it
+ */
 @Composable
 fun ImageFromUrl(
     modifier: Modifier = Modifier,
     imageUrl: String,
-    showSize: Boolean = false
+    showSize: Boolean = false,
+    contentDescription: String?
 ) {
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
@@ -45,7 +50,7 @@ fun ImageFromUrl(
                     modifier = modifier,
                     painter = painter,
                     contentScale = ContentScale.Crop,
-                    contentDescription = null // TODO fix this
+                    contentDescription = contentDescription
                 )
                 if (showSize) {
                     Text(
@@ -65,7 +70,7 @@ fun ImageFromUrl(
                 Icon(
                     modifier = Modifier.size(48.dp),
                     painter = painterResource(id = R.drawable.ic_image),
-                    contentDescription = null, // TODO
+                    contentDescription = stringResource(id = R.string.image_loading_content_description),
                     tint = Color.Gray
                 )
             }

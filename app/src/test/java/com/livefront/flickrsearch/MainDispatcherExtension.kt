@@ -12,9 +12,12 @@ import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
+/**
+ * Helper class for testing with Kotlin coroutines
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainDispatcherExtension(
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : AfterAllCallback,
     AfterEachCallback,
     BeforeAllCallback,

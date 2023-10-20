@@ -6,6 +6,9 @@ import com.livefront.flickrsearch.viewmodels.BaseViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+/**
+ * [Composable] function used to watch for events from the view model on the eventFlow
+ */
 @Composable
 fun <E> EventsEffect(
     viewModel: BaseViewModel<*, E, *>,

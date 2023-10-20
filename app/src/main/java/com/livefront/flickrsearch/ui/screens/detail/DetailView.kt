@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.livefront.flickrsearch.R
@@ -26,6 +27,9 @@ import com.livefront.flickrsearch.data.network.extractUsername
 import com.livefront.flickrsearch.data.network.FlickrPhoto
 import com.livefront.flickrsearch.ui.ImageFromUrl
 
+/**
+ * [Composable] for displaying the details of an image, including the top bar with the back button
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailView(
@@ -52,27 +56,38 @@ fun DetailView(
             )
         }
     ) { paddingValues ->
-        Column(
+        DetailContent(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            ImageFromUrl(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(4.dp),
-                imageUrl = photo.media.values.first(),
-                showSize = true
-            )
-            Text(
-                text = photo.title
-            )
-            TagsView(
-                modifier = Modifier.fillMaxWidth(),
-                tags = photo.tags
-            )
-        }
+                .padding(horizontal = 16.dp),
+            photo = photo
+        )
+    }
+}
+
+@Composable
+private fun DetailContent(
+    modifier: Modifier = Modifier,
+    photo: FlickrPhoto
+) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        ImageFromUrl(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(4.dp),
+            imageUrl = photo.media.values.first(),
+            showSize = true,
+            contentDescription = stringResource(id = R.string.user_image)
+        )
+        Text(
+            text = photo.title
+        )
+        TagsView(
+            modifier = Modifier.fillMaxWidth(),
+            tags = photo.tags
+        )
     }
 }
