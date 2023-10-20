@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FlickrSearch</string>
+
+    <!-- Search Screen -->
+    <string name="search_top_bar_title">Flickr Search</string>
+    <string name="search_text_field_hint">Enter tags to search</string>
+
+</resources>
